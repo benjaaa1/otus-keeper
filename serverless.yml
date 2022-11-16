@@ -4,10 +4,6 @@ provider:
   name: aws
   runtime: nodejs16.x
 
-plugins:
-  - serverless-webpack
-  - serverless-webpack-prisma
-
 functions:
   otus-hedge-keeper:
     handler: index.handler
