@@ -9,7 +9,7 @@ plugins:
   - serverless-webpack-prisma
 
 functions:
-  otus-hedge-keeper
+  otus-hedge-keeper:
     handler: index.handler
     name: otus-hedge-keeper-service
     events:
