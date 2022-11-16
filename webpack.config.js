@@ -67,8 +67,4 @@ module.exports = {
             },
         ],
     },
-    // We still want type checking, just without the burden on build performance, 
-    // so we use a plugin to take care of it on another thread.
-    plugins: [new ForkTsCheckerWebpackPlugin(), new CopyWebpackPlugin({ patterns: ['./prisma/schema.prisma'] }), // without this the prisma generate above will not work
-    ],
 };
