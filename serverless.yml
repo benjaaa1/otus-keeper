@@ -9,9 +9,9 @@ plugins:
   - serverless-webpack-prisma
 
 functions:
-  hedge-options-position-update-service:
+  otus-hedge-keeper
     handler: index.handler
-    name: hedge-options-position-update-service
+    name: otus-hedge-keeper-service
     events:
       - eventBridge:
           schedule: rate(15 minutes)
