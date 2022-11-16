@@ -1,0 +1,22 @@
+service: otus-hedge-keeper
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+
+plugins:
+  - serverless-webpack
+  - serverless-webpack-prisma
+
+functions:
+  hedge-options-position-update-service:
+    handler: index.handler
+    name: hedge-options-position-update-service
+    events:
+      - eventBridge:
+          schedule: rate(15 minutes)
+custom:
+  webpack:
+    webpackConfig: "webpack.config.js"
+    includeModules: true # This is required
+    packager: "yarn"
