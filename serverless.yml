@@ -15,8 +15,3 @@ functions:
     events:
       - eventBridge:
           schedule: rate(15 minutes)
-custom:
-  webpack:
-    webpackConfig: "webpack.config.js"
-    includeModules: true # This is required
-    packager: "yarn"
