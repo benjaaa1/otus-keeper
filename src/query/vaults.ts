@@ -1,9 +1,10 @@
 import request, { gql } from 'graphql-request'
+import { ethers } from 'ethers'
+
 import { getOtusEndpoint, provider } from '../utils/utils';
 
-export const vaults = async () => {
+export const vaults = async (hedgeType: number, _provider: ethers.providers.JsonRpcProvider) => {
 
-  const _provider = await provider();
   const _network = await _provider.getNetwork();
 
   const otusEndpoint = getOtusEndpoint(_network)
@@ -11,34 +12,34 @@ export const vaults = async () => {
   const response = await request(
     otusEndpoint,
     gql`
-      query {
-        vaults {
+      query ($hedgeType: hedgeType) {
+        vaults(where: {
+          hedgeType: $hedgeType,
+          isActive: true,
+          isPublic: true,
+          vaultTrades: { _gt: 0 }
+        }) {
           id
           isActive
           isPublic
           strategy {
-                id
-                latestUpdate
-                hedgeType
-                vaultStrategy {
-                  id
-                  collatBuffer
-                }
-              }
-              vaultTrades {
-                id
-                strikeId
-                positionId
-                premiumEarned
-                strikePrice
-                openedAt
-                expiry
-                optionType
-              }
+            id
+            hedgeType
+            dynamicHedgeStrategy {
+              threshold
+              period
+            }
+          }
+          vaultTrades {
+            id
+            strikeId
+            positionId
+            optionType
+          }
         }
       }
     `,
-    {}
+    { hedgeType: hedgeType }
   );
 
   return response;

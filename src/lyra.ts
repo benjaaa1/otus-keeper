@@ -1,5 +1,6 @@
 import { ethers, BigNumber } from 'ethers'
-import Lyra, { Strike, Quote, Market } from '@lyrafinance/lyra-js'
+import Lyra, { Strike, Quote, Market, Position } from '@lyrafinance/lyra-js'
+import { fromBigNumber } from './utils/format'
 
 const provider = new ethers.providers.InfuraProvider(10, process.env.INFURA_ID)
 
@@ -35,3 +36,13 @@ export type LyraMarket = {
 }
 
 export const markets = async (): Promise<Market[]> => await lyra.markets()
+
+export const getDelta = async (market: string, positionId: number): Promise<number> => {
+
+  const position: Position = await lyra.position(market, positionId);
+
+  const { delta }: { delta: BigNumber } = position;
+
+  return fromBigNumber(delta);
+
+}
